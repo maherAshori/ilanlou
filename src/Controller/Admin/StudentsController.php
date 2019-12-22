@@ -66,13 +66,12 @@ class StudentsController extends AppController
 
             if ($this->nc($this->request->getData('nationalCode'))) {
                 if ($this->Students->save($student)) {
-                    $this->Flash->success(__('The student has been saved.'));
+                    $this->Flash->success(__('دانش آموز با موفقیت ایجاد شد'));
 
                     return $this->redirect(['action' => 'index']);
                 }
-                $this->Flash->error(__('The student could not be saved. Please, try again.'));
             }else{
-                $this->Flash->error(__('Student national code is invalid'));
+                $this->Flash->error(__('کد ملی دانش آموز نامعتبر است'));
             }
         }
         $this->set(compact('student'));
@@ -231,11 +230,10 @@ class StudentsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $student = $this->Students->patchEntity($student, $this->request->getData());
             if ($this->Students->save($student)) {
-                $this->Flash->success(__('The student has been saved.'));
+                $this->Flash->success(__('دانش آموز با موفقیت ویرایش شد'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The student could not be saved. Please, try again.'));
         }
         $this->set(compact('student'));
     }
@@ -252,29 +250,11 @@ class StudentsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $student = $this->Students->get($id);
         if ($this->Students->delete($student)) {
-            $this->Flash->success(__('The student has been deleted.'));
+            $this->Flash->success(__('دانش آموز با موفقیت حذف شد'));
         } else {
-            $this->Flash->error(__('The student could not be deleted. Please, try again.'));
+            $this->Flash->error(__('حذف دانش آموز با مشکل مواجه گردید'));
         }
 
         return $this->redirect(['action' => 'index']);
-    }
-
-    public function join($id = null, $classroomId)
-    {
-        $StudentClassroom = $this->StudentClassroom->newEntity();
-
-        $this->request->allowMethod(['post', 'delete']);
-
-        $StudentClassroom->student_id = $id;
-        $StudentClassroom->classroom_id = $classroomId;
-
-        if ($this->StudentClassroom->save($StudentClassroom)) {
-            $this->Flash->success(__('The student successfully added to the course.'));
-        } else {
-            $this->Flash->error(__('The student could not be added. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index', $classroomId]);
     }
 }

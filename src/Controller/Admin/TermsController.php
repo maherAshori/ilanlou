@@ -54,11 +54,10 @@ class TermsController extends AppController
         if ($this->request->is('post')) {
             $term = $this->Terms->patchEntity($term, $this->request->getData());
             if ($this->Terms->save($term)) {
-                $this->Flash->success(__('The term has been saved.'));
+                $this->Flash->success(__('ترم با موفقیت ایجاد شد'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The term could not be saved. Please, try again.'));
         }
         $courses = $this->Terms->Courses->find('list', ['limit' => 200]);
         $this->set(compact('term', 'courses'));
@@ -79,11 +78,10 @@ class TermsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $term = $this->Terms->patchEntity($term, $this->request->getData());
             if ($this->Terms->save($term)) {
-                $this->Flash->success(__('The term has been saved.'));
+                $this->Flash->success(__('ترم با موفقیت ویرایش شد'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The term could not be saved. Please, try again.'));
         }
         $courses = $this->Terms->Courses->find('list', ['limit' => 200]);
         $this->set(compact('term', 'courses'));
@@ -101,9 +99,9 @@ class TermsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $term = $this->Terms->get($id);
         if ($this->Terms->delete($term)) {
-            $this->Flash->success(__('The term has been deleted.'));
+            $this->Flash->success(__('ترم با موفقیت حذف شد'));
         } else {
-            $this->Flash->error(__('The term could not be deleted. Please, try again.'));
+            $this->Flash->error(__('حذف ترم با مشکل مواجه گردید'));
         }
 
         return $this->redirect(['action' => 'index']);

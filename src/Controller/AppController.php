@@ -81,7 +81,7 @@ class AppController extends Controller
                 $this->set('user', $this->user);
             } else {
                 $this->Cookie->delete('token');
-                $this->Flash->error(__('You are not authorize!'));
+                $this->Flash->error(__('مجدداً وارد وب سایت شوید'));
                 return $this->redirect(['prefix' => false,'controller' => 'Students', 'action' => 'login']);
             }
         }else{
@@ -107,7 +107,7 @@ class AppController extends Controller
                 $this->set('user', $this->user);
             } else {
                 $this->Cookie->delete('token');
-                $this->Flash->error(__('You are not authorize!'));
+                $this->Flash->error(__('مجدداً وارد وب سایت شوید'));
                 return $this->redirect(['prefix' => false,'controller' => 'Students', 'action' => 'login']);
             }
         }else{

@@ -26,7 +26,7 @@ class ClassroomsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Terms']
+            'contain' => ['Terms', 'Scores']
         ];
         $classrooms = $this->paginate($this->Classrooms);
 
@@ -57,15 +57,22 @@ class ClassroomsController extends AppController
             'conditions' => ['classroom_id' => $classroomId]
         ]);
 
+        $data = [];
+
         foreach ($students as $item){
-            $score = $this->Classrooms->Scores->newEntity();
-            $score->student_id = $item->student_id;
-            $score->classroom_id = $item->classroom_id;
-            $score->score = 0;
-            if($this->Classrooms->Scores->save($score)){
-                $this->Flash->success(__('امتحان برای این کلاس ثبت شد'));
-            };
+            $object = [
+                'student_id' => $item->student_id,
+                'classroom_id' => $item->classroom_id,
+                'score' => 0
+            ];
+
+            array_push($data, $object);
         }
+
+        $entities = $this->Classrooms->Scores->newEntities($data);
+        if($this->Classrooms->Scores->saveMany($entities)){
+            $this->Flash->success(__('امتحان برای دانش اموزان این کلاس ثبت شد'));
+        };
 
         return $this->redirect(['action' => 'index']);
     }

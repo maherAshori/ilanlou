@@ -51,10 +51,9 @@ class TeachersController extends AppController
             }
 
             if ($this->Teachers->save($teacher)) {
-                $this->Flash->success(__('The teacher has been saved.'));
+                $this->Flash->success(__('آموزگار با موفقیت ایجاد شد'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The teacher could not be saved. Please, try again.'));
         }
         $this->set(compact('teacher'));
     }
@@ -83,11 +82,10 @@ class TeachersController extends AppController
             }
 
             if ($this->Teachers->save($teacher)) {
-                $this->Flash->success(__('The teacher has been saved.'));
+                $this->Flash->success(__('آموزگار با موفقیت ویرایش شد'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The teacher could not be saved. Please, try again.'));
         }
         $this->set(compact('teacher'));
     }
@@ -104,9 +102,9 @@ class TeachersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $teacher = $this->Teachers->get($id);
         if ($this->Teachers->delete($teacher)) {
-            $this->Flash->success(__('The teacher has been deleted.'));
+            $this->Flash->success(__('حذف آموزگار با موفقیت انجام شد'));
         } else {
-            $this->Flash->error(__('The teacher could not be deleted. Please, try again.'));
+            $this->Flash->error(__('حذف آموزگار با مشکل مواجه شد'));
         }
 
         return $this->redirect(['action' => 'index']);
