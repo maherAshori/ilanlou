@@ -16,7 +16,6 @@ class ClassroomsController extends AppController
     {
         $this->loadModel("StudentClassroom");
         $this->loadModel("Votes");
-        $this->loadModel("Requests");
 
         parent::initialize();
     }
@@ -54,7 +53,6 @@ class ClassroomsController extends AppController
             'contain' => ['Terms', 'Teachers', 'StudentClassroom', 'Points']
         ]);
 
-
         if($this->isAuthorized){
             $student = $this->Classrooms->StudentClassroom->find('all', [
                 'conditions' => ['student_id' => $this->student->id, 'classroom_id' => $classroom['id']]
@@ -76,21 +74,4 @@ class ClassroomsController extends AppController
         $this->set(compact('classroom', 'style'));
     }
 
-    public function request($classroomId)
-    {
-        $StudentClassroom = $this->Requests->newEntity();
-
-        $this->request->allowMethod(['post']);
-
-        $StudentClassroom->student_id = $this->student->id;
-        $StudentClassroom->classroom_id = $classroomId;
-
-        if ($this->Requests->save($StudentClassroom)) {
-            $this->Flash->success(__('درخواست ثبت نام شما با موفقیت ارسال گردید'));
-        } else {
-            $this->Flash->error(__('لطفاً مجدداً امتحان کنید'));
-        }
-
-        return $this->redirect(['controller' => 'Students','action' => 'view']);
-    }
 }

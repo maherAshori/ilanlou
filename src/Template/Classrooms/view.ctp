@@ -14,13 +14,17 @@ use Cake\Routing\Router;
                     <div class="regular_title text-right">
                         <?= h($classroom->name) ?>
 
-                        <?php if($classroom->points): ?>
-                        <span class="float-left h6 mt-2 text-muted">
-                            امتیاز کلاس: <span class="ml-3 text-warning"><?= $classroom->points->avgVotes ?> از <?= $classroom->points->allVotes ?> کاربر</span>
-                        </span>
-                        <?php endif; ?>
+                        <div class="points">
+                            <?= $this->Form->postLink('<i class="fa fa-thumbs-up"></i>', ['controller' => 'Points','action' => 'thumbsUp', $classroom->id, $classroom->slug], ['class' => 'btn btn-sm btn-outline-success', 'escape' => false]) ?>
+                            <span class="h6 text-success"><?= $classroom->point->positive_points ?></span>
+
+                            <?= $this->Form->postLink('<i class="fa fa-thumbs-down"></i>', ['controller' => 'Points','action' => 'thumbsDown', $classroom->id, $classroom->slug], ['class' => 'btn btn-sm btn-outline-danger', 'escape' => false]) ?>
+                            <span class="h6 text-danger"><?= $classroom->point->negative_points ?></span>
+                        </div>
                     </div>
                     <div class="regular_text">
+                        <?= $this->Flash->render() ?>
+
                         <ul class="list-group text-right" dir="rtl">
                             <li class="list-group-item">
                                 ترم: <?= $this->Html->link($classroom->term->name . '<i class="fa fa-external-link mr-2"></i>', ['controller' => 'Terms', 'action' => 'view', $classroom->term->slug], ['class' => 'ml-3', 'escape' => false]); ?> <small>(نمایش سایر کلاس ها در این ترم)</small>
@@ -80,7 +84,7 @@ use Cake\Routing\Router;
                 <p>جهت بررسی درخواست با شما تماس گرفته خواهد شد</p>
             </div>
             <div class="modal-footer">
-                <?= $this->Form->postLink(__('ارسال درخواست'), ['action' => 'request', $classroom->id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Form->postLink(__('ارسال درخواست'), ['controller' => 'Requests','action' => 'add', $classroom->id, $classroom->slug], ['class' => 'btn btn-primary']) ?>
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">انصراف</button>
             </div>
         </div>

@@ -11,28 +11,38 @@
         </div>
         <div class="row courses_row">
 
-            <?php foreach ($classrooms as $course): ?>
+            <?php foreach ($classrooms as $classroom): ?>
                 <!-- Course -->
                 <div class="col-lg-4 course_col">
                     <div class="course">
                         <div class="course_image">
-                            <?= $this->Html->image('/uploads/classrooms/'.$course->image) ?>
+                            <?= $this->Html->image('/uploads/classrooms/'.$classroom->image) ?>
                         </div>
                         <div class="course_body">
                             <div class="course_title text-right">
-                                <?= $this->Html->link($course->name, ['controller' => 'Classrooms', 'action' => 'view', $course->slug]) ?>
+                                <?= $this->Html->link($classroom->name, ['controller' => 'Classrooms', 'action' => 'view', $classroom->slug]) ?>
+                                <?php if(!empty($classroom->point)): ?>
+                                <div class="points d-flex">
+                                    <div class="text-success mr-3">
+                                        <i class="fa fa-thumbs-up mr-1" aria-hidden="true"></i><span><?= $classroom->point->positive_points ?></span>
+                                    </div>
+                                    <div class="text-danger">
+                                        <i class="fa fa-thumbs-down mr-1" aria-hidden="true"></i><span><?= $classroom->point->negative_points ?></span>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
                             </div>
                             <div class="course_info text-right">
                                 <ul>
                                     <li>
-                                        <?= $this->Html->link($course->teacher->fullName, ['controller' => 'Teachers', 'action' => 'view', $course->teacher->slug]) ?>
+                                        <?= $this->Html->link($classroom->teacher->fullName, ['controller' => 'Teachers', 'action' => 'view', $classroom->teacher->slug]) ?>
                                     </li>
                                 </ul>
                             </div>
                             <div class="course_text text-right" dir="rtl">
                                 <p>
                                     <?= $this->Text->truncate(
-                                            $course->description ,
+                                        $classroom->description ,
                                             80,
                                             [
                                                 'ellipsis' => '...',
@@ -41,17 +51,18 @@
                                         );
                                     ?>
                                 </p>
-                                <?= $this->Html->link('بیشتر', ['controller' => 'Classrooms', 'action' => 'view', $course->slug], ['class' => 'btn btn-sm btn-dark mt-2']) ?>
+                                <?= $this->Html->link('بیشتر', ['controller' => 'Classrooms', 'action' => 'view', $classroom->slug], ['class' => 'btn btn-sm btn-dark mt-2']) ?>
                             </div>
                         </div>
-                        <div class="course_footer d-flex flex-row align-items-center justify-content-start">
-                            <div class="course_students" title="تعداد دانش آموزان  <?= $course->name ?>"><i class="fa fa-user" aria-hidden="true"></i><span><?= count($course->student_classroom) ?></span></div>
-                            <div class="course_rating ml-auto" title="امتیاز  <?= $course->name ?>"><i class="fa fa-star" aria-hidden="true"></i><span><?= $course->vote ?></span>
+                        <div class="course_footer d-flex align-items-center justify-content-start">
+                            <div title="تعداد زبان آموزان در این کلاس">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span><?= count($classroom->student_classroom) ?></span>
                             </div>
-                            <div class="course_mark course_free" title="قیمت  <?= $course->name ?>">
-                                <a href="#">
-                                    <?= $course->price != 0 ? $this->Number->format($course->price) : 'رایگان' ?>
-                                </a>
+                            <div class="ml-auto" title="هزینه ثبت نام">
+                                <span class="badge badge-primary p-2" dir="rtl">
+                                    <?= $classroom->price != 0 ? $this->Number->format($classroom->price) . ' تومان' : 'رایگان' ?>
+                                </span>
                             </div>
                         </div>
                     </div>

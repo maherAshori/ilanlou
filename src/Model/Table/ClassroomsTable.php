@@ -56,7 +56,7 @@ class ClassroomsTable extends Table
             'foreignKey' => 'teacher_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('Points', [
+        $this->hasOne('Points', [
             'foreignKey' => 'classroom_id'
         ]);
         $this->hasMany('Requests', [

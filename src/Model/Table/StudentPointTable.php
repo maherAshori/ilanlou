@@ -7,20 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Points Model
+ * StudentPoint Model
  *
+ * @property \App\Model\Table\StudentsTable&\Cake\ORM\Association\BelongsTo $Students
  * @property \App\Model\Table\ClassroomsTable&\Cake\ORM\Association\BelongsTo $Classrooms
  *
- * @method \App\Model\Entity\Point get($primaryKey, $options = [])
- * @method \App\Model\Entity\Point newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Point[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Point|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Point saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Point patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Point[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Point findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\StudentPoint get($primaryKey, $options = [])
+ * @method \App\Model\Entity\StudentPoint newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\StudentPoint[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\StudentPoint|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\StudentPoint saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\StudentPoint patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\StudentPoint[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\StudentPoint findOrCreate($search, callable $callback = null, $options = [])
  */
-class PointsTable extends Table
+class StudentPointTable extends Table
 {
     /**
      * Initialize method
@@ -32,10 +33,14 @@ class PointsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('points');
+        $this->setTable('student_point');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Students', [
+            'foreignKey' => 'student_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('Classrooms', [
             'foreignKey' => 'classroom_id',
             'joinType' => 'INNER'
@@ -54,14 +59,6 @@ class PointsTable extends Table
             ->integer('id')
             ->allowEmptyString('id', null, 'create');
 
-        $validator
-            ->integer('negative_points')
-            ->allowEmptyString('negative_points');
-
-        $validator
-            ->integer('positive_points')
-            ->allowEmptyString('positive_points');
-
         return $validator;
     }
 
@@ -74,6 +71,7 @@ class PointsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['student_id'], 'Students'));
         $rules->add($rules->existsIn(['classroom_id'], 'Classrooms'));
 
         return $rules;

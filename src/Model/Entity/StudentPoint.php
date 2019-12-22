@@ -4,16 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Point Entity
+ * StudentPoint Entity
  *
  * @property int $id
+ * @property int $student_id
  * @property int $classroom_id
- * @property int|null $negative_points
- * @property int|null $positive_points
  *
+ * @property \App\Model\Entity\Student $student
  * @property \App\Model\Entity\Classroom $classroom
  */
-class Point extends Entity
+class StudentPoint extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -25,9 +25,9 @@ class Point extends Entity
      * @var array
      */
     protected $_accessible = [
+        'student_id' => true,
         'classroom_id' => true,
-        'negative_points' => true,
-        'positive_points' => true,
+        'student' => true,
         'classroom' => true
     ];
 }
