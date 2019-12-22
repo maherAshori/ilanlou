@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Term[]|\Cake\Collection\CollectionInterface $terms
+ */
+$this->assign('title', 'دانش آموزان');
+?>
 <?= $this->Form->create($student) ?>
 <fieldset>
     <legend><?= __('ویرایش دانش آموز') ?></legend>

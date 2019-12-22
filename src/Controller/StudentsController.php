@@ -219,20 +219,6 @@ class StudentsController extends AppController
             }
         }
 
-//        $exams = $this->StudentsExams->find('all', [
-//            'conditions' => ['student_id' => $student->id],
-//            'contain' => ['Exams']
-//        ]);
-//
-//        $count = 0;
-//        foreach ($exams as $exam){
-//            $count++;
-//        }
-//
-//        if($count > 0){
-//            $student->exams = $exams;
-//        }
-
         $this->set(compact('student', 'style'));
 
     }
@@ -269,7 +255,7 @@ class StudentsController extends AppController
                         $student = $this->Students->patchEntity($student, $this->request->getData());
                         if ($this->Students->save($student)) {
                             $this->Flash->success(__('با تشکر، ثبت نام شما با موفقیت انجام شد'));
-                            return $this->redirect(['controller' => 'students', 'action' => 'add']);
+                            return $this->redirect(['controller' => 'students', 'action' => 'login']);
                         }
                     } else {
                         $this->Flash->error(__('شماره همراه وارد شده در حال حاضر موجود است'));

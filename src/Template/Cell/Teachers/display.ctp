@@ -1,5 +1,5 @@
 <?php if(!empty($teachers)): ?>
-<div class="instructors">
+<div class="instructors" dir="rtl">
     <div class="instructors_background" style="background-image:url(<?= _WWW_ROOT.'/web/images/instructors_background.png' ?>images/instructors_background.png)"></div>
     <div class="container">
         <div class="row">

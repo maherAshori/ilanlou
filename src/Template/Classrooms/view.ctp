@@ -16,10 +16,11 @@ use Cake\Routing\Router;
 
                         <div class="points">
                             <?= $this->Form->postLink('<i class="fa fa-thumbs-up"></i>', ['controller' => 'Points','action' => 'thumbsUp', $classroom->id, $classroom->slug], ['class' => 'btn btn-sm btn-outline-success', 'escape' => false]) ?>
-                            <span class="h6 text-success"><?= $classroom->point->positive_points ?></span>
+
+                            <span class="h6 text-success"><?= empty($classroom->point) ? 0 : $classroom->point->positive_points ?></span>
 
                             <?= $this->Form->postLink('<i class="fa fa-thumbs-down"></i>', ['controller' => 'Points','action' => 'thumbsDown', $classroom->id, $classroom->slug], ['class' => 'btn btn-sm btn-outline-danger', 'escape' => false]) ?>
-                            <span class="h6 text-danger"><?= $classroom->point->negative_points ?></span>
+                            <span class="h6 text-danger"><?= empty($classroom->point) ? 0 : $classroom->point->negative_points ?></span>
                         </div>
                     </div>
                     <div class="regular_text">

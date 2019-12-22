@@ -1,10 +1,12 @@
 <?php
 namespace App\View\Cell;
 
+use App\Model\Entity\Teacher;
 use Cake\View\Cell;
 
 /**
  * Teachers cell
+ * @property Teacher Teachers
  */
 class TeachersCell extends Cell
 {
@@ -33,21 +35,17 @@ class TeachersCell extends Cell
      */
     public function display()
     {
-        $tutors = $this->Teachers->find('all', [
-            'conditions' => ['preview' => true]
-        ]);
+        $teacherCount = $this->Teachers->find('all', [
+            'conditions' => ['home' => true]
+        ])->count();
 
-        $count = 0;
-
-        foreach ($tutors as $item){
-            $count++;
-        }
-
-        $teachers = $tutors;
-
-        if($count == 0){
+        if($teacherCount == 0){
             $teachers = null;
         }
+
+        $teachers = $this->Teachers->find('all', [
+            'conditions' => ['home' => true]
+        ]);
 
         $this->set('teachers', $teachers);
     }

@@ -20,14 +20,25 @@ $this->assign('title', 'حساب کاربری');
 
                             <?= $this->Flash->render() ?>
 
+                            <?php if (empty($student->notifications) && empty($student->student_classroom) && empty($student->requests) && empty($student->scores)): ?>
+                                <div class="alert alert-primary text-right" dir="rtl">
+                                    <p>زبان آموز عزیز</p>
+                                    <p>از اینکه آموزشگاه ما را جهت پیشرفت خودتان انتخاب کرده اید متشکریم</p>
+                                    <p>شما در این قسمت به اطلاعات کلاس هایی که در آنها ثبت نام کرده اید و همچنین نمرات کلاس ها دسترسی خواهید داشت</p>
+                                </div>
+                                <div class="alert alert-warning text-right" dir="rtl">
+                                    <p>برای شروع کلاس خودتان را از بخش کلاس ها پیدا کنید و درخواست ثبت نام نمائید</p>
+                                </div>
+                            <?php endif; ?>
+
                             <?php if (!empty($student->notifications)): ?>
-                                <div class="alert alert-primary">
+                                <div class="alert alert-primary text-right" dir="rtl">
                                     <?php foreach ($student->notifications as $notification): ?>
                                         <?= $notification->message ?>
                                     <?php endforeach; ?>
 
-                                    <div class="float-right">
-                                        <?= $this->Form->postLink(__('close'), ['action' => 'closeNotification'], ['class' => 'text-dark']) ?>
+                                    <div class="clearfix mt-3">
+                                        <?= $this->Form->postLink(__('بستن'), ['action' => 'closeNotification'], ['class' => 'text-dark']) ?>
                                     </div>
                                 </div>
                             <?php endif; ?>

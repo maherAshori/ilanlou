@@ -1,11 +1,20 @@
-<h3><?= __('Requests') ?></h3>
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Course[]|\Cake\Collection\CollectionInterface $courses
+ */
+
+$this->assign('title', 'درخواست ها');
+?>
+
+<h3><?= __('درخواست ثبت نام') ?></h3>
 <table cellpadding="0" cellspacing="0">
     <thead>
     <tr>
-        <th scope="col"><?= $this->Paginator->sort('student_id') ?></th>
-        <th scope="col"><?= $this->Paginator->sort('classroom_id') ?></th>
-        <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-        <th scope="col" class="actions"><?= __('Actions') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('student_id', 'دانش آموز') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('classroom_id', 'کلاس') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('created', 'تاریخ درخواست') ?></th>
+        <th scope="col" class="actions"><?= __('عملیات') ?></th>
     </tr>
     </thead>
     <tbody>
@@ -15,7 +24,7 @@
             <td><?= $request->has('classroom') ? $this->Html->link($request->classroom->name, ['controller' => 'Classrooms', 'action' => 'view', $request->classroom->id]) : '' ?></td>
             <td><?= h($request->created) ?></td>
             <td>
-                <?= $this->Form->postLink(__('accept'), ['action' => 'accept', $request->id], ['confirm' => __('After accept "{0}" will join "{1}" course, are you sure?', $request->student->fullName, $request->classroom->name)]) ?>
+                <?= $this->Form->postLink(__('پذیرش دخواست'), ['action' => 'accept', $request->id], ['confirm' => __('پس از تایید دانش آموز در کلاس "{0}" ثبت نام خواهد شد', $request->classroom->name)]) ?>
             </td>
         </tr>
     <?php endforeach; ?>
@@ -23,11 +32,10 @@
 </table>
 <div class="paginator">
     <ul class="pagination">
-        <?= $this->Paginator->first('<< ' . __('first')) ?>
-        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+        <?= $this->Paginator->first('<< ' . __('اولین صفحه')) ?>
+        <?= $this->Paginator->prev('< ' . __('قبلی')) ?>
         <?= $this->Paginator->numbers() ?>
-        <?= $this->Paginator->next(__('next') . ' >') ?>
-        <?= $this->Paginator->last(__('last') . ' >>') ?>
+        <?= $this->Paginator->next(__('بعدی') . ' >') ?>
+        <?= $this->Paginator->last(__('آخرین صفحه') . ' >>') ?>
     </ul>
-    <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
 </div>

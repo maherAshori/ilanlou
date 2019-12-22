@@ -426,23 +426,6 @@ div.alert {
     line-height: 2.5em;
 }
 
-div.alert:before {
-    line-height: 0px;
-    font-size: 20px;
-    height: 12px;
-    width: 12px;
-    border-radius: 15px;
-    text-align: center;
-    vertical-align: middle;
-    display: inline-block;
-    position: relative;
-    left: -11px;
-    background-color: #FFF;
-    padding: 12px 14px 12px 10px;
-    content: "i";
-    color: #a0d3e8;
-}
-
 div.alert.alert-danger {
     background-color: #C3232D;
     color: #FFF;

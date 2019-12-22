@@ -14,6 +14,7 @@ $this->assign('title', 'ورود به حساب کاربری');
                             <?= $this->Form->control('mobile', ['type' => 'tel', 'class' => 'form-control', 'label' => 'موبایل خود را وارد نمائید', 'autocomplete' => 'off']); ?>
                         </div>
                         <?= $this->Form->button(__('ارسال کد'), ['class' => 'btn btn-primary']) ?>
+                        <?= $this->Html->link(__('ثبت نام'), ['action' => 'add'], ['class' => 'btn btn-link']) ?>
                         <?= $this->Form->end() ?>
                         <div class="mt-3">
                             <?= $this->Flash->render() ?>

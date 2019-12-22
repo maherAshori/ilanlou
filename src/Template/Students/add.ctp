@@ -17,6 +17,7 @@ $this->assign('title', 'ثبت نام');
                             <?= $this->Form->control('mobile', ['type' => 'tel', 'class' => 'form-control', 'autocomplete' => 'off', 'label' => 'شماره همراه']); ?>
                         </div>
                         <?= $this->Form->button(__('ثبت نام'), ['class' => 'btn btn-primary']) ?>
+                        <?= $this->Html->link(__('ورود به حساب کاربری'), ['action' => 'login'], ['class' => 'btn btn-link']) ?>
                         <?= $this->Form->end() ?>
                         <div class="mt-3">
                             <?= $this->Flash->render() ?>

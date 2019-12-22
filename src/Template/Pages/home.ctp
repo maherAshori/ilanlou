@@ -23,3 +23,5 @@
 
 
 <?= $this->cell("Classrooms") ?>
+<?= $this->cell("Teachers") ?>
+<?= $this->cell("Events") ?>

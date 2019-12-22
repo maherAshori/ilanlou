@@ -11,6 +11,7 @@
     <?= $this->Html->css('/web/plugins/iranfont/fontiran.css') ?>
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('style.css') ?>
+    <?= $this->Html->script('/web/js/jquery-3.2.1.min.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

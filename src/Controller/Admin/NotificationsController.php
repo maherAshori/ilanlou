@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
@@ -51,23 +52,45 @@ class NotificationsController extends AppController
     public function add()
     {
         $notification = $this->Notifications->newEntity();
+        $students = $this->Notifications->Students->find('list');
+
         if ($this->request->is('post')) {
-            $notification = $this->Notifications->patchEntity($notification, $this->request->getData());
 
-            $find = $this->Notifications->find('all', ['conditions' => $this->request->getData('student_id')])->first();
+            if ($this->request->getData('toAll')) {
+                $all = $this->Notifications->Students->find('all');
+                $data = [];
+                foreach ($all as $student) {
+                    $object = [
+                        'student_id' => $student->id,
+                        'message' => $this->request->getData('message')
+                    ];
 
-            if($find){
-                $this->Notifications->delete($find);
+                    array_push($data, $object);
+                }
+
+                $entities = $this->Notifications->newEntities($data);
+
+                $this->Notifications->deleteAll($entities);
+
+                if($this->Notifications->saveMany($entities)){
+                    $this->Flash->success(__('پیام با موفقیت ارسال شد'));
+                }
+            } else {
+                $notification = $this->Notifications->patchEntity($notification, $this->request->getData());
+
+                $find = $this->Notifications->find('all', ['conditions' => ['student_id' => $this->request->getData('student_id')]])->first();
+
+                if (!empty($find)) {
+                    $this->Notifications->delete($find);
+                }
+
+                if ($this->Notifications->save($notification)) {
+                    $this->Flash->success(__('پیام با موفقیت ارسال شد'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
             }
-
-            if ($this->Notifications->save($notification)) {
-                $this->Flash->success(__('The notification has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The notification could not be saved. Please, try again.'));
         }
-        $students = $this->Notifications->Students->find('list', ['limit' => 200]);
         $this->set(compact('notification', 'students'));
     }
 
@@ -86,11 +109,10 @@ class NotificationsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $notification = $this->Notifications->patchEntity($notification, $this->request->getData());
             if ($this->Notifications->save($notification)) {
-                $this->Flash->success(__('The notification has been saved.'));
+                $this->Flash->success(__('پیام با موفقیت ویرایش شد'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The notification could not be saved. Please, try again.'));
         }
         $students = $this->Notifications->Students->find('list', ['limit' => 200]);
         $this->set(compact('notification', 'students'));
@@ -108,9 +130,7 @@ class NotificationsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $notification = $this->Notifications->get($id);
         if ($this->Notifications->delete($notification)) {
-            $this->Flash->success(__('The notification has been deleted.'));
-        } else {
-            $this->Flash->error(__('The notification could not be deleted. Please, try again.'));
+            $this->Flash->success(__('پیام با موفقیت حذف شد'));
         }
 
         return $this->redirect(['action' => 'index']);

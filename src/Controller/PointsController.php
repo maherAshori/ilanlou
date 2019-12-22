@@ -95,6 +95,13 @@ class PointsController extends AppController
         $point = $this->Points->newEntity();
         $this->request->allowMethod(['post']);
 
+        $studentInClass = $this->StudentClassroom->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
+
+        if(empty($studentInClass)){
+            $this->Flash->error(__('برای درج امتیاز باید ابتدا ثبت نام نمائید'));
+            return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
+        }
+
         $allowToSubmit = $this->StudentPoint->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
 
         if(!empty($allowToSubmit)){

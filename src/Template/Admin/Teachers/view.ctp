@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Term[]|\Cake\Collection\CollectionInterface $terms
+ */
+$this->assign('title', 'آموزگاران');
+?>
+
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('FirstName') ?></th>

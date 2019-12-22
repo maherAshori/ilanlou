@@ -1,10 +1,12 @@
 <?php
 namespace App\View\Cell;
 
+use App\Model\Entity\Event;
 use Cake\View\Cell;
 
 /**
  * Events cell
+ * @property Event Events
  */
 class EventsCell extends Cell
 {
@@ -33,22 +35,18 @@ class EventsCell extends Cell
      */
     public function display()
     {
-        $events = $this->Events->find("all", [
-            'conditions' => ['dashboard' => true]
-        ]);
+        $eventsCount = $this->Events->find("all", [
+            'conditions' => ['home' => true]
+        ])->count();
 
-        $count = 0;
-
-        foreach ($events as $item){
-            $count++;
-        }
-
-        $Events = $events;
-
-        if($count == 0){
+        if($eventsCount == 0){
             $Events = null;
         }
 
-        $this->set("events", $Events);
+        $events = $this->Events->find("all", [
+            'conditions' => ['home' => true]
+        ]);
+
+        $this->set("events", $events);
     }
 }

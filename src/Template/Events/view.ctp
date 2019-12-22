@@ -18,7 +18,7 @@ $this->assign('title', 'رویداد: '.$event->title);
                     <div class="regular_text text-right" dir="rtl">
                         <ul class="list-group" dir="rtl">
                             <li class="list-group-item">
-                                تاریخ برگزاری: <span class="ml-3"><?= $this->cell('ConvertDate', [$event->creation]) ?></span>
+                                تاریخ انتشار: <span class="ml-3"><?= $this->cell('ConvertDate', [$event->creation_date]) ?></span>
                             </li>
                         </ul>
 

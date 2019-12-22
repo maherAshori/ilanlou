@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Term[]|\Cake\Collection\CollectionInterface $terms
+ */
+$this->assign('title', 'آموزگاران');
+?>
     <?= $this->Form->create($teacher, ['type' => 'file']) ?>
     <fieldset>
         <legend>
