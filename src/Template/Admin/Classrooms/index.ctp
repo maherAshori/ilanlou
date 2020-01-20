@@ -14,17 +14,18 @@ $this->assign('title', 'کلاس');
 <table cellpadding="0" cellspacing="0">
     <thead>
     <tr>
-        <th scope="col"><?= $this->Paginator->sort('term_id', 'ترم') ?></th>
         <th scope="col"><?= $this->Paginator->sort('name', 'عنوان کلاس') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('term_id', 'ترم') ?></th>
         <th scope="col" class="actions"><?= __('امتحان') ?></th>
+        <th scope="col" class="actions"><?= __('دانش آموز') ?></th>
         <th scope="col" class="actions"><?= __('عملیات') ?></th>
     </tr>
     </thead>
     <tbody>
     <?php foreach ($classrooms as $classroom): ?>
         <tr>
-            <td><?= $classroom->has('term') ? $this->Html->link($classroom->term->name, ['controller' => 'Terms', 'action' => 'view', $classroom->term->id]) : '' ?></td>
             <td><?= h($classroom->name) ?></td>
+            <td><?= $classroom->has('term') ? $this->Html->link($classroom->term->name, ['controller' => 'Terms', 'action' => 'view', $classroom->term->id]) : '' ?></td>
             <td>
                 <?php if(empty($classroom->scores)) :?>
                 <?= $this->Form->postLink(__('ثبت امتحان برای کلاس'), ['action' => 'score', $classroom->id], ['confirm' => __('پس از تایید برای این کلاس امتحان ثبت خواهد شد؟', $classroom->name)]) ?>
@@ -32,6 +33,9 @@ $this->assign('title', 'کلاس');
                 <?php if(!empty($classroom->scores)) :?>
                     <?= $this->Html->link(__('ثبت نمره برای دانش آموزان کلاس'), ['controller' => 'Scores','action' => 'students', $classroom->id]) ?>
                 <?php endif; ?>
+            </td>
+            <td>
+                <?= $this->Html->link(__('اضافه کردن دانش آموز'), ['action' => 'students', $classroom->id]) ?>
             </td>
             <td class="actions">
                 <?= $this->Html->link(__('نمایش'), ['action' => 'view', $classroom->id]) ?>

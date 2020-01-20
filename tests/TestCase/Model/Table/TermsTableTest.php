@@ -53,6 +53,16 @@ class TermsTableTest extends TestCase
     }
 
     /**
+     * Test findBySlug method
+     *
+     * @return void
+     */
+    public function testFindBySlug()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
      * Test initialize method
      *
      * @return void

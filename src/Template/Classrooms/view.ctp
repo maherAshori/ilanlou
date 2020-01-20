@@ -35,7 +35,7 @@ use Cake\Routing\Router;
                             </li>
                             <li class="list-group-item">
                                 <?php if(!$classroom->registred): ?>
-                                    مبلغ: <?= $classroom->price != 0 ? '<span class="text-danger ml-3">'.$this->Number->format($classroom->price).' (تومان)</span>' : 'رایگان' ?>
+                                    مبلغ: <?= $classroom->price != 0 & $auth ? '<span class="text-danger ml-3">'.$this->Number->format($classroom->price).' (تومان)</span>' : '<span class="text-info">جهت مشاهده مبلغ دوره ابتدا باید عضو مجموعه آموزشی ایلانلو باشید</span>' ?>
                                 <?php endif; ?>
                                 <?php if($classroom->registred): ?>
                                     <span class="text-success">شما در این کلاس ثبت نام کرده اید</span>
@@ -55,7 +55,7 @@ use Cake\Routing\Router;
                                         <?php endif; ?>
                                     <?php endif; ?>
                                     <?php if(!$auth && !$classroom->registred): ?>
-                                        <?= $this->Html->link('جهت درخواست ثبت نام ابتدا وارد شوید', ['controller' => 'Students', 'action' => 'login', "redirect"=>Router::url()], ['class' => 'btn btn-sm btn-primary']) ?>
+                                        <?= $this->Html->link('جهت ثبت نام در کلاس ابتدا وارد شوید', ['controller' => 'Students', 'action' => 'login', "redirect"=>Router::url()], ['class' => 'btn btn-sm btn-primary']) ?>
                                     <?php endif; ?>
                                 </div>
                             </li>

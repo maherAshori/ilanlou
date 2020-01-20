@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Term Entity
  *
  * @property int $id
- * @property int $course_id
+ * @property int $branch_id
  * @property string $name
  * @property string|null $slug
  * @property string|null $description
@@ -27,7 +27,7 @@ class Term extends Entity
      * @var array
      */
     protected $_accessible = [
-        'course_id' => true,
+        'branch_id' => true,
         'name' => true,
         'slug' => true,
         'description' => true,

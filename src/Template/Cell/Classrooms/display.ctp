@@ -51,7 +51,6 @@
                                         );
                                     ?>
                                 </p>
-                                <?= $this->Html->link('بیشتر', ['controller' => 'Classrooms', 'action' => 'view', $classroom->slug], ['class' => 'btn btn-sm btn-dark mt-2']) ?>
                             </div>
                         </div>
                         <div class="course_footer d-flex align-items-center justify-content-start">
@@ -59,10 +58,8 @@
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 <span><?= count($classroom->student_classroom) ?></span>
                             </div>
-                            <div class="ml-auto" title="هزینه ثبت نام">
-                                <span class="badge badge-primary p-2" dir="rtl">
-                                    <?= $classroom->price != 0 ? $this->Number->format($classroom->price) . ' تومان' : 'رایگان' ?>
-                                </span>
+                            <div class="ml-auto">
+                                <?= $this->Html->link('بیشتر', ['controller' => 'Classrooms', 'action' => 'view', $classroom->slug], ['class' => 'btn btn-sm btn-dark']) ?>
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,7 @@ $this->assign('title', 'ترم');
     <fieldset>
         <legend><?= __('ایجاد ترم') ?></legend>
         <?php
-            echo $this->Form->control('course_id', ['options' => $courses, 'label' => 'دوره را انتخاب کنید']);
+            echo $this->Form->control('branch_id', ['options' => $branches, 'label' => 'شعبه را انتخاب کنید']);
             echo $this->Form->control('name', ['label' => 'عنوان ترم']);
             echo $this->Form->control('description', ['label' => 'توضیحات']);
         ?>

@@ -42,7 +42,7 @@ class BranchesTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Courses', [
+        $this->hasMany('Terms', [
             'foreignKey' => 'branch_id'
         ]);
     }

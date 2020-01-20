@@ -20,7 +20,7 @@ class TermsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Courses']
+            'contain' => ['Branches']
         ];
         $terms = $this->paginate($this->Terms);
 
@@ -37,7 +37,7 @@ class TermsController extends AppController
     public function view($id = null)
     {
         $term = $this->Terms->get($id, [
-            'contain' => ['Courses', 'Classrooms']
+            'contain' => ['Branches', 'Classrooms']
         ]);
 
         $this->set('term', $term);
@@ -59,8 +59,8 @@ class TermsController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
         }
-        $courses = $this->Terms->Courses->find('list', ['limit' => 200]);
-        $this->set(compact('term', 'courses'));
+        $branches = $this->Terms->Branches->find('list');
+        $this->set(compact('term', 'branches'));
     }
 
     /**

@@ -10,9 +10,8 @@ use Cake\Validation\Validator;
 /**
  * Terms Model
  *
- * @property &\Cake\ORM\Association\BelongsTo $Courses
- * @property &\Cake\ORM\Association\HasMany $Classes
- * @property \Cake\ORM\Association Courses
+ * @property \App\Model\Table\BranchesTable&\Cake\ORM\Association\BelongsTo $Branches
+ * @property \App\Model\Table\ClassroomsTable&\Cake\ORM\Association\HasMany $Classrooms
  *
  * @method \App\Model\Entity\Term get($primaryKey, $options = [])
  * @method \App\Model\Entity\Term newEntity($data = null, array $options = [])
@@ -29,6 +28,7 @@ class TermsTable extends Table
     {
         return $query->where(['slug' => $slug])->contain($contain)->first();
     }
+
     /**
      * Initialize method
      *
@@ -43,8 +43,8 @@ class TermsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Courses', [
-            'foreignKey' => 'course_id',
+        $this->belongsTo('Branches', [
+            'foreignKey' => 'branch_id',
             'joinType' => 'INNER'
         ]);
         $this->hasMany('Classrooms', [
@@ -91,7 +91,7 @@ class TermsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['course_id'], 'Courses'));
+        $rules->add($rules->existsIn(['branch_id'], 'Branches'));
 
         return $rules;
     }

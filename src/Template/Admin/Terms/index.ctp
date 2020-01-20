@@ -15,16 +15,16 @@ $this->assign('title', 'ترم');
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('course_id', 'دوره') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name', 'عنوان ترم') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('branch_id', 'شعبه') ?></th>
                 <th scope="col" class="actions"><?= __('عملیات') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($terms as $term): ?>
             <tr>
-                <td><?= $term->has('course') ? $this->Html->link($term->course->name, ['controller' => 'Courses', 'action' => 'view', $term->course->id]) : '' ?></td>
                 <td><?= h($term->name) ?></td>
+                <td><?= $term->has('branch') ? $this->Html->link($term->branch->name, ['controller' => 'Branches', 'action' => 'view', $term->branch->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('نمایش'), ['action' => 'view', $term->id]) ?>
                     <?= $this->Html->link(__('ویرایش'), ['action' => 'edit', $term->id]) ?>

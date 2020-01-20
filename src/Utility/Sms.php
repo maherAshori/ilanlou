@@ -99,7 +99,6 @@ class Sms
 
             $SmsIR_VerificationCode = new SMSVerification($APIKey, $SecretKey, $APIURL);
             $VerificationCode = $SmsIR_VerificationCode->verificationCode($Code, $MobileNumber);
-
             if($VerificationCode === "your verification code is sent"){
                 return true;
             }else{

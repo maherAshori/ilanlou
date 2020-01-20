@@ -56,6 +56,10 @@ class ClassroomsTable extends Table
             'foreignKey' => 'teacher_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Languages', [
+            'foreignKey' => 'language_id',
+            'joinType' => 'INNER'
+        ]);
         $this->hasOne('Points', [
             'foreignKey' => 'classroom_id'
         ]);

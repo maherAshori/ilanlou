@@ -12,6 +12,7 @@ $this->assign('title', 'درخواست ها');
     <thead>
     <tr>
         <th scope="col"><?= $this->Paginator->sort('student_id', 'دانش آموز') ?></th>
+        <th scope="col">شماره تماس</th>
         <th scope="col"><?= $this->Paginator->sort('classroom_id', 'کلاس') ?></th>
         <th scope="col"><?= $this->Paginator->sort('created', 'تاریخ درخواست') ?></th>
         <th scope="col" class="actions"><?= __('عملیات') ?></th>
@@ -20,11 +21,14 @@ $this->assign('title', 'درخواست ها');
     <tbody>
     <?php foreach ($requests as $request): ?>
         <tr>
-            <td><?= $request->has('student') ? $this->Html->link($request->student->fullName, ['controller' => 'Students', 'action' => 'view', $request->student->id]) : '' ?></td>
+            <td><?= $request->student->fullName ?></td>
+            <td><?= $request->student->mobile ?></td>
             <td><?= $request->has('classroom') ? $this->Html->link($request->classroom->name, ['controller' => 'Classrooms', 'action' => 'view', $request->classroom->id]) : '' ?></td>
-            <td><?= h($request->created) ?></td>
             <td>
-                <?= $this->Form->postLink(__('پذیرش دخواست'), ['action' => 'accept', $request->id], ['confirm' => __('پس از تایید دانش آموز در کلاس "{0}" ثبت نام خواهد شد', $request->classroom->name)]) ?>
+                <?= $this->cell("ConvertDate", [$request->created]) ?>
+            </td>
+            <td>
+                <?= $this->Form->postLink(__('پذیرش درخواست'), ['action' => 'accept', $request->id], ['confirm' => __('پس از تایید دانش آموز در کلاس "{0}" ثبت نام خواهد شد', $request->classroom->name)]) ?>
             </td>
         </tr>
     <?php endforeach; ?>

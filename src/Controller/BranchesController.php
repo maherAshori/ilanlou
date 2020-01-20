@@ -19,9 +19,11 @@ class BranchesController extends AppController
      */
     public function index()
     {
+        $style = "pages";
+
         $branches = $this->paginate($this->Branches);
 
-        $this->set(compact('branches'));
+        $this->set(compact('branches', 'style'));
     }
 
     /**
@@ -35,7 +37,7 @@ class BranchesController extends AppController
     {
         $style = "pages";
 
-        $branch = $this->Branches->findBySlug($this->Branches->find(), $slug, ['Courses']);
+        $branch = $this->Branches->findBySlug($this->Branches->find(), $slug, ['Terms']);
         $this->set(compact('branch', 'style'));
     }
 

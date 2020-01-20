@@ -34,7 +34,7 @@ class TermsController extends AppController
     {
         $style = "pages";
         $term = $this->Terms->findBySlug($this->Terms->find(), $slug, ['Classrooms']);
-        $term->course = $this->Terms->Courses->get($term->course_id);
+        $term->branch = $this->Terms->Branches->get($term->branch_id);
         $this->set(compact('term', 'style'));
     }
 }

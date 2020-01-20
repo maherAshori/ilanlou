@@ -26,7 +26,8 @@ class PointsController extends AppController
         parent::initialize();
     }
 
-    private function studentPoint($id = null){
+    private function studentPoint($id = null)
+    {
         $studentPoint = $this->StudentPoint->newEntity();
         $studentPoint = $this->StudentPoint->patchEntity($studentPoint, $this->request->getData());
         $studentPoint->student_id = $this->student->id;
@@ -47,37 +48,43 @@ class PointsController extends AppController
         $point = $this->Points->newEntity();
         $this->request->allowMethod(['post']);
 
-        $studentInClass = $this->StudentClassroom->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
-
-        if(empty($studentInClass)){
-            $this->Flash->error(__('برای درج امتیاز باید ابتدا ثبت نام نمائید'));
+        if (empty($this->student)) {
+            $this->Flash->error(__('جهت درج امتیاز ابتدا وارد وب سایت شوید'));
             return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
-        }
+        } else {
 
-        $allowToSubmit = $this->StudentPoint->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
+            $studentInClass = $this->StudentClassroom->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
 
-        if(!empty($allowToSubmit)){
-            $this->Flash->error(__('شما قبلاً به این کلاس امتیاز داده اید'));
-            return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
-        }
-
-        $findClassroomPoint = $this->Points->find('all', ['conditions' => ['classroom_id' => $id]])->first();
-
-        if(empty($findClassroomPoint)){
-            $point = $this->Points->patchEntity($point, $this->request->getData());
-            $point->classroom_id = $id;
-            $point->positive_points = 1;
-            $point->negative_points = 0;
-            if ($this->Points->save($point)) {
-                $this->studentPoint($id);
+            if (empty($studentInClass)) {
+                $this->Flash->error(__('برای درج امتیاز باید ابتدا ثبت نام نمائید'));
                 return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
             }
-        } else {
-            $point = $this->Points->patchEntity($findClassroomPoint, $this->request->getData());
-            $point->positive_points += 1;
-            if ($this->Points->save($point)) {
-                $this->studentPoint($id);
+
+            $allowToSubmit = $this->StudentPoint->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
+
+            if (!empty($allowToSubmit)) {
+                $this->Flash->error(__('شما قبلاً به این کلاس امتیاز داده اید'));
                 return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
+            }
+
+            $findClassroomPoint = $this->Points->find('all', ['conditions' => ['classroom_id' => $id]])->first();
+
+            if (empty($findClassroomPoint)) {
+                $point = $this->Points->patchEntity($point, $this->request->getData());
+                $point->classroom_id = $id;
+                $point->positive_points = 1;
+                $point->negative_points = 0;
+                if ($this->Points->save($point)) {
+                    $this->studentPoint($id);
+                    return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
+                }
+            } else {
+                $point = $this->Points->patchEntity($findClassroomPoint, $this->request->getData());
+                $point->positive_points += 1;
+                if ($this->Points->save($point)) {
+                    $this->studentPoint($id);
+                    return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
+                }
             }
         }
     }
@@ -95,37 +102,43 @@ class PointsController extends AppController
         $point = $this->Points->newEntity();
         $this->request->allowMethod(['post']);
 
-        $studentInClass = $this->StudentClassroom->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
-
-        if(empty($studentInClass)){
-            $this->Flash->error(__('برای درج امتیاز باید ابتدا ثبت نام نمائید'));
+        if (empty($this->student)) {
+            $this->Flash->error(__('جهت درج امتیاز ابتدا وارد وب سایت شوید'));
             return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
-        }
+        } else {
 
-        $allowToSubmit = $this->StudentPoint->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
+            $studentInClass = $this->StudentClassroom->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
 
-        if(!empty($allowToSubmit)){
-            $this->Flash->error(__('شما قبلاً به این کلاس امتیاز داده اید'));
-            return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
-        }
-
-        $findClassroomPoint = $this->Points->find('all', ['conditions' => ['classroom_id' => $id]])->first();
-
-        if(empty($findClassroomPoint)){
-            $point = $this->Points->patchEntity($point, $this->request->getData());
-            $point->classroom_id = $id;
-            $point->positive_points = 0;
-            $point->negative_points = 1;
-            if ($this->Points->save($point)) {
-                $this->studentPoint($id);
+            if (empty($studentInClass)) {
+                $this->Flash->error(__('برای درج امتیاز باید ابتدا ثبت نام نمائید'));
                 return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
             }
-        } else {
-            $point = $this->Points->patchEntity($findClassroomPoint, $this->request->getData());
-            $point->negative_points += 1;
-            if ($this->Points->save($point)) {
-                $this->studentPoint($id);
+
+            $allowToSubmit = $this->StudentPoint->find('all', ['conditions' => ['classroom_id' => $id, 'student_id' => $this->student->id]])->first();
+
+            if (!empty($allowToSubmit)) {
+                $this->Flash->error(__('شما قبلاً به این کلاس امتیاز داده اید'));
                 return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
+            }
+
+            $findClassroomPoint = $this->Points->find('all', ['conditions' => ['classroom_id' => $id]])->first();
+
+            if (empty($findClassroomPoint)) {
+                $point = $this->Points->patchEntity($point, $this->request->getData());
+                $point->classroom_id = $id;
+                $point->positive_points = 0;
+                $point->negative_points = 1;
+                if ($this->Points->save($point)) {
+                    $this->studentPoint($id);
+                    return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
+                }
+            } else {
+                $point = $this->Points->patchEntity($findClassroomPoint, $this->request->getData());
+                $point->negative_points += 1;
+                if ($this->Points->save($point)) {
+                    $this->studentPoint($id);
+                    return $this->redirect(['controller' => 'Classrooms', 'action' => 'view', $slug]);
+                }
             }
         }
     }

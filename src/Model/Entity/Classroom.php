@@ -38,6 +38,7 @@ class Classroom extends Entity
     protected $_accessible = [
         'term_id' => true,
         'teacher_id' => true,
+        'language_id' => true,
         'name' => true,
         'slug' => true,
         'price' => true,

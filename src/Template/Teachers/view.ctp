@@ -1,5 +1,5 @@
 <?php
-$this->assign('title', 'آموزگار: '.$teacher->fullName);
+$this->assign('title', $teacher->fullName);
 ?>
 
 <div class="home"></div>
@@ -12,7 +12,7 @@ $this->assign('title', 'آموزگار: '.$teacher->fullName);
                         <?= h($teacher->fullName) ?>
 
                         <div class="teacher-img">
-                            <?= $this->Html->image('/uploads/teachers/'.$teacher->image, ['class' => 'img-thumbnail']) ?>
+                            <?= $this->Html->image(empty($teacher->image) ? 'profile.png' : '/uploads/teachers/'.$teacher->image, ['class' => 'img-thumbnail']) ?>
                         </div>
                     </div>
                     <div class="regular_text text-justify" dir="rtl">

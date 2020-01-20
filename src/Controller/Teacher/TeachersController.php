@@ -86,11 +86,11 @@ class TeachersController extends AppController
             }
 
             if ($this->Teachers->save($teacher)) {
-                $this->Flash->success(__('The teacher has been saved.'));
+                $this->Flash->success(__('با موفقیت ذخیره شد'));
 
                 return $this->redirect(['action' => 'view']);
             }
-            $this->Flash->error(__('The teacher could not be saved. Please, try again.'));
+            $this->Flash->error(__('با مشکل مواجه گردید'));
         }
         $this->set(compact('teacher'));
     }

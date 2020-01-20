@@ -27,7 +27,7 @@
     <div class="top-bar-section">
         <ul class="left">
             <li>
-                <?= $this->Html->link($user->firstName . ' ' . $user->lastName, ['controller' => $this->request->getParam("prefix") == 'admin' ? 'Users' : 'Teachers', 'action' => 'view', $user->id]) ?>
+                <?= $this->Html->link($user->firstName . ' ' . $user->lastName, ['controller' => $this->request->getParam("prefix") == 'admin' ? 'Users' : 'Teachers', 'action' => 'view']) ?>
             </li>
             <li>
                 <?= $this->Html->link('خروج از پنل', ['controller' => $this->request->getParam("prefix") == 'admin' ? 'Users' : 'Teachers', 'action' => 'logout']) ?>
@@ -40,8 +40,8 @@
     <nav class="large-3 medium-4 columns" id="actions-sidebar">
         <?php if ($this->request->getParam("prefix") == 'admin'): ?>
             <ul class="side-nav">
+                <li><?= $this->Html->link(__('زبان ها'), ['controller' => 'Languages', 'action' => 'index']) ?></li>
                 <li><?= $this->Html->link(__('شعبه ها'), ['controller' => 'Branches', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link(__('دوره ها'), ['controller' => 'Courses', 'action' => 'index']) ?></li>
                 <li><?= $this->Html->link(__('ترم ها'), ['controller' => 'Terms', 'action' => 'index']) ?></li>
                 <li><?= $this->Html->link(__('کلاس ها'), ['controller' => 'Classrooms', 'action' => 'index']) ?></li>
                 <li><?= $this->Html->link(__('کاربران پنل'), ['controller' => 'Users', 'action' => 'index']) ?></li>
@@ -55,7 +55,8 @@
 
         <?php if ($this->request->getParam("prefix") == 'teacher'): ?>
             <ul class="side-nav">
-                <li><?= $this->Html->link(__('Profile'), ['controller' => 'Teachers', 'action' => 'view']) ?></li>
+                <li><?= $this->Html->link(__('پروفایل'), ['controller' => 'Teachers', 'action' => 'view']) ?></li>
+                <li><?= $this->Html->link(__('کلاس های من'), ['controller' => 'Classrooms', 'action' => 'index']) ?></li>
             </ul>
         <?php endif; ?>
     </nav>

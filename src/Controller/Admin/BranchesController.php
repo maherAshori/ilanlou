@@ -34,7 +34,7 @@ class BranchesController extends AppController
     public function view($id = null)
     {
         $branch = $this->Branches->get($id, [
-            'contain' => ['Courses']
+            'contain' => ['Terms']
         ]);
 
         $this->set('branch', $branch);
@@ -51,11 +51,11 @@ class BranchesController extends AppController
         if ($this->request->is('post')) {
             $branch = $this->Branches->patchEntity($branch, $this->request->getData());
             if ($this->Branches->save($branch)) {
-                $this->Flash->success(__('The branch has been saved.'));
+                $this->Flash->success(__('با موفقیت ثبت شد'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The branch could not be saved. Please, try again.'));
+            $this->Flash->error(__('با مشکل مواجه گردید'));
         }
         $this->set(compact('branch'));
     }
@@ -75,11 +75,11 @@ class BranchesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $branch = $this->Branches->patchEntity($branch, $this->request->getData());
             if ($this->Branches->save($branch)) {
-                $this->Flash->success(__('The branch has been saved.'));
+                $this->Flash->success(__('با موفقیت ویرایش شد'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The branch could not be saved. Please, try again.'));
+            $this->Flash->error(__('با مشکل مواجه گردید'));
         }
         $this->set(compact('branch'));
     }
@@ -96,9 +96,9 @@ class BranchesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $branch = $this->Branches->get($id);
         if ($this->Branches->delete($branch)) {
-            $this->Flash->success(__('The branch has been deleted.'));
+            $this->Flash->success(__('با موفقیت حذف گردید'));
         } else {
-            $this->Flash->error(__('The branch could not be deleted. Please, try again.'));
+            $this->Flash->error(__('با مشکل مواجه گردید'));
         }
 
         return $this->redirect(['action' => 'index']);

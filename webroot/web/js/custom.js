@@ -147,7 +147,7 @@ $(document).ready(function()
 			var langSlider = $('.language_slider');
 			langSlider.owlCarousel(
 			{
-				loop:true,
+				loop:false,
 				autoplay:false,
 				smartSpeed:1200,
 				nav:false,

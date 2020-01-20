@@ -2,11 +2,13 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use App\Model\Entity\Student;
 
 /**
  * Classrooms Controller
  *
  * @property \App\Model\Table\ClassroomsTable $Classrooms
+ * @property Student Students
  *
  * @method \App\Model\Entity\Classroom[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -16,6 +18,53 @@ class ClassroomsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('Upload');
+        $this->loadModel("Students");
+    }
+
+    public function students($classroomId)
+    {
+        $students = $this->paginate($this->Students->find('all', [
+            'contain' => ['StudentClassroom']
+        ]));
+
+        if ($this->request->is('post')) {
+            if (empty($this->request->getData('search'))) {
+                $students = $this->paginate($this->Students);
+            } else {
+                $students = $this->Students->find()->where([
+                    'OR' => [
+                        ['nationalCode' => $this->request->getData('search')],
+                    ]
+                ]);
+            }
+        }
+
+        $this->set(compact('students', 'classroomId'));
+    }
+
+    public function join($studentId, $classId)
+    {
+        $this->loadModel('StudentClassroom');
+
+        $this->request->allowMethod(['post']);
+
+        $find = $this->StudentClassroom->find('all', ['conditions' =>
+            ['student_id' => $studentId, 'classroom_id' => $classId]
+        ])->first();
+
+        if (empty($find)) {
+            $class = $this->StudentClassroom->newEntity();
+            $class->student_id = $studentId;
+            $class->classroom_id = $classId;
+            if ($this->StudentClassroom->save($class)) {
+                $this->Flash->success(__('دانش آموز با موفقیت در این کلاس ثبت نام شد'));
+                return $this->redirect(['action' => 'students', $classId]);
+            }
+            return $this->redirect(['action' => 'index']);
+        }else{
+            $this->Flash->error(__('دانش آموز قبلا در این کلاس ثبت نام شده است'));
+            return $this->redirect(['action' => 'students', $classId]);
+        }
     }
 
     /**
@@ -42,14 +91,23 @@ class ClassroomsController extends AppController
      */
     public function view($id = null)
     {
+        $this->loadModel("Students");
+
         $classroom = $this->Classrooms->get($id, [
             'contain' => ['Terms', 'Points', 'Requests', 'Scores', 'StudentClassroom']
         ]);
 
+
+        foreach ($classroom->student_classroom as $student) {
+            $item = $this->Students->get($student->student_id);
+            $student['info'] = $item;
+        }
+
         $this->set('classroom', $classroom);
     }
 
-    public function score($classroomId){
+    public function score($classroomId)
+    {
         $this->request->allowMethod(['post', 'delete']);
 
 
@@ -59,7 +117,7 @@ class ClassroomsController extends AppController
 
         $data = [];
 
-        foreach ($students as $item){
+        foreach ($students as $item) {
             $object = [
                 'student_id' => $item->student_id,
                 'classroom_id' => $item->classroom_id,
@@ -70,7 +128,7 @@ class ClassroomsController extends AppController
         }
 
         $entities = $this->Classrooms->Scores->newEntities($data);
-        if($this->Classrooms->Scores->saveMany($entities)){
+        if ($this->Classrooms->Scores->saveMany($entities)) {
             $this->Flash->success(__('امتحان برای دانش اموزان این کلاس ثبت شد'));
         };
 
@@ -95,15 +153,16 @@ class ClassroomsController extends AppController
             }
 
             if ($this->Classrooms->save($classroom)) {
-                $this->Flash->success(__('The classroom has been saved.'));
+                $this->Flash->success(__('با موفقیت ثبت گردید'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The classroom could not be saved. Please, try again.'));
+            $this->Flash->error(__('با مشکل مواجه گردید'));
         }
+        $languages = $this->Classrooms->Languages->find('list');
         $terms = $this->Classrooms->Terms->find('list');
         $teachers = $this->Classrooms->Teachers->find('list');
-        $this->set(compact('classroom', 'terms', 'teachers'));
+        $this->set(compact('classroom', 'terms', 'teachers', 'languages'));
     }
 
     /**
@@ -129,11 +188,11 @@ class ClassroomsController extends AppController
             }
 
             if ($this->Classrooms->save($classroom)) {
-                $this->Flash->success(__('The classroom has been saved.'));
+                $this->Flash->success(__('با موفقیت ثبت گردید'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The classroom could not be saved. Please, try again.'));
+            $this->Flash->error(__('با مشکل مواجه گردید'));
         }
         $terms = $this->Classrooms->Terms->find('list');
         $teachers = $this->Classrooms->Teachers->find('list');
@@ -153,9 +212,9 @@ class ClassroomsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $classroom = $this->Classrooms->get($id);
         if ($this->Classrooms->delete($classroom)) {
-            $this->Flash->success(__('The classroom has been deleted.'));
+            $this->Flash->success(__('با موفقیت حذف گردید'));
         } else {
-            $this->Flash->error(__('The classroom could not be deleted. Please, try again.'));
+            $this->Flash->error(__('با مشکل مواجه گردید'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -81,12 +81,15 @@
                     <div class="col">
                         <div class="header_content d-flex flex-row align-items-center justify-content-start">
                             <div class="logo_container mr-auto">
-                                <?= $this->Html->link('<div class="logo_text">' . $title . '</div>', "/", ['escape' => false]) ?>
+                                <?= $this->Html->link($this->Html->image('logo.jpg', ['width' => '145px']), "/", ['escape' => false]) ?>
                             </div>
                             <nav class="main_nav_contaner" dir="rtl">
                                 <ul class="main_nav">
                                     <li class="<?= $this->request->getParam("controller") === "Pages" && $this->request->getParam("action") === 'display' ? 'active' : '' ?>">
                                         <?= $this->Html->link('خانه', "/") ?>
+                                    </li>
+                                    <li class="<?= $this->request->getParam("controller") === "Branches" && $this->request->getParam("action") === 'index' ? 'active' : '' ?>">
+                                        <?= $this->Html->link('شعبه ها', ['controller' => 'Branches', 'action' => 'index']) ?>
                                     </li>
                                     <li class="<?= $this->request->getParam("controller") === "Classrooms" && $this->request->getParam("action") === 'index' ? 'active' : '' ?>">
                                         <?= $this->Html->link('کلاس ها', ['controller' => 'Classrooms', 'action' => 'index']) ?>
@@ -163,15 +166,7 @@
                 <div></div>
             </div>
         </div>
-<!--        <div class="search">-->
-<!--            <form action="#" class="header_search_form menu_mm">-->
-<!--                <input type="search" class="search_input menu_mm" placeholder="Search" required="required">-->
-<!--                <button-->
-<!--                    class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm">-->
-<!--                    <i class="fa fa-search menu_mm" aria-hidden="true"></i>-->
-<!--                </button>-->
-<!--            </form>-->
-<!--        </div>-->
+
         <nav class="menu_nav w-100">
             <ul class="menu_mm text-right">
                 <?php if ($auth): ?>

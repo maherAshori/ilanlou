@@ -11,12 +11,13 @@
 
                         <ul class="list- mb-3" dir="rtl">
                             <li class="list-group-item">
-                                دوره: <?= $this->Html->link($term->course->name . '<i class="fa fa-external-link mr-2"></i>', ['controller' => 'Courses', 'action' => 'view', $term->course->slug], ['class' => 'ml-3', 'escape' => false]); ?> <small>(نمایش سایر ترم ها در این دوره)</small>
+                                شعبه: <?= $this->Html->link($term->branch->name . '<i class="fa fa-external-link mr-2"></i>', ['controller' => 'Branches', 'action' => 'view', $term->branch->slug], ['class' => 'ml-3', 'escape' => false]); ?> <small>(نمایش سایر ترم ها در این شعبه)</small>
                             </li>
                         </ul>
 
                         <?= $this->Text->autoParagraph(h($term->description)); ?>
 
+                        <h6>دوره ها</h6>
                         <?php if (!empty($term->classrooms)): ?>
                             <div class="row">
                                 <?php foreach ($term->classrooms as $classrooms): ?>

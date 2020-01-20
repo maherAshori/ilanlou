@@ -9,6 +9,7 @@ $this->assign('title', 'کلاس');
     <fieldset>
         <legend><?= __('ایجاد کلاس') ?></legend>
         <?php
+            echo $this->Form->control('language_id', ['options' => $languages, 'label' => 'زبان را انتخاب کنید']);
             echo $this->Form->control('term_id', ['options' => $terms, 'label' => 'ترم را انتخاب کنید']);
             echo $this->Form->control('teacher_id', ['options' => $teachers, 'label' => 'آموزگار را انتخاب کنید']);
             echo $this->Form->control('name', ['label' => 'عنوان کلاس']);

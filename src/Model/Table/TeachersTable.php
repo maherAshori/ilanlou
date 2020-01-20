@@ -23,6 +23,22 @@ use Cake\Validation\Validator;
  */
 class TeachersTable extends Table
 {
+    public function findByMobile(Query $query, $mobile)
+    {
+        return $query->where(['mobile' => $mobile])->first();
+    }
+
+    public function findByCode(Query $query, $code)
+    {
+        return $query->where(['code' => $code])->first();
+    }
+
+    public function findByToken(Query $query, $token, $contain = array())
+    {
+        return $query->where(['token' => $token])->contain($contain)->first();
+    }
+
+
     /**
      * Initialize method
      *

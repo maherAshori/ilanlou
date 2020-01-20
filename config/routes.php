@@ -105,8 +105,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/branches/*', ['controller' => 'Branches', 'action' => 'view']);
 
 
-    $routes->connect('/courses', ['controller' => 'Courses', 'action' => 'index']);
-    $routes->connect('/courses/*', ['controller' => 'Courses', 'action' => 'view']);
+    $routes->connect('/languages', ['controller' => 'Languages', 'action' => 'index']);
+    $routes->connect('/languages/*', ['controller' => 'Languages', 'action' => 'view']);
 
     $routes->connect('/classrooms', ['controller' => 'Classrooms', 'action' => 'index']);
     $routes->connect('/classrooms/*', ['controller' => 'Classrooms', 'action' => 'view']);

@@ -21,7 +21,7 @@
     </div>
 </div>
 
-
+<?= $this->cell("Languages") ?>
 <?= $this->cell("Classrooms") ?>
 <?= $this->cell("Teachers") ?>
 <?= $this->cell("Events") ?>
